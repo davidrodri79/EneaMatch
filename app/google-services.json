@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "94824492421",
+    "project_id": "eneamatch",
+    "storage_bucket": "eneamatch.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:94824492421:android:16aaad89d2b032c55828ec",
+        "android_client_info": {
+          "package_name": "com.example.eneamatch"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "94824492421-qcsumfuvo0v8790a33eaehc84mnmlqbe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.eneamatch",
+            "certificate_hash": "76371eae32c7b5d1b91fecd2f7c907c71b7f4b6e"
+          }
+        },
+        {
+          "client_id": "94824492421-8ol05mhk2o96bsbqoofut2hfvemrflno.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC19Qxah-XUTepBWL1Ee_zAcDUfyfoZ8qg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "94824492421-8ol05mhk2o96bsbqoofut2hfvemrflno.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/photoImageView"
+                android:layout_width="254dp"
+                android:layout_height="254dp"
+                app:srcCompat="@drawable/user" />/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Nombre de usuario"/>
+            <EditText
+                android:id="@+id/nickEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nombre"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Género"/>
+            <!--EditText
+                android:id="@+id/genreEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Hombre/Mujer/Otro"/-->
+            <Spinner
+                android:id="@+id/genreSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Edad"/>
+            <EditText
+                android:id="@+id/ageEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Edad en años"
+                android:inputType="number"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Sobre mí"/>
+            <EditText
+                android:id="@+id/aboutEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Descríbete..."
+                android:lines="6"
+                android:gravity="top|left"/>
+            <Button
+                android:id="@+id/saveProfileButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Guardar"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

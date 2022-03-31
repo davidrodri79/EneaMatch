@@ -20,7 +20,9 @@ public class AppViewModel extends AndroidViewModel {
     }
 
     private Profile userProfile = null, viewingProfile = null;
-    private boolean profileRetrieved = false;
+    private Search userSearch = null;
+    private boolean profileRetrieved = false, searchRetrieved = false;
+
 
     public AppViewModel(@NonNull Application application)
     {
@@ -63,6 +65,46 @@ public class AppViewModel extends AndroidViewModel {
 
         FirebaseFirestore.getInstance().collection("profiles")
                 .document(user.getUid()).set(userProfile)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //navController.popBackStack();
+                    }
+                });
+    }
+
+    public boolean isSearchRetrieved()
+    {
+        return searchRetrieved;
+    }
+
+    public Search getUserSearch()
+    {
+        return userSearch;
+    }
+
+    public void retrieveUserSearch()
+    {
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        DocumentReference docRef = FirebaseFirestore.getInstance().collection("searches").document(user.getUid());
+        docRef.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                userSearch = documentSnapshot.toObject(Search.class);
+                searchRetrieved = true;
+            }
+        });
+    }
+
+    public void setUserSearch(Search s)
+    {
+        userSearch = s;
+
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+        FirebaseFirestore.getInstance().collection("searches")
+                .document(user.getUid()).set(userSearch)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

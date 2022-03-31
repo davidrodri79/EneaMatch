@@ -55,6 +55,9 @@ public class searchFragment extends Fragment {
                 }
             });
 
+        if(!appViewModel.isSearchRetrieved())
+            appViewModel.retrieveUserSearch();
+
         RecyclerView postsRecyclerView = view.findViewById(R.id.postsRecyclerView);
 
         Query query = FirebaseFirestore.getInstance().collection("profiles").limit(50);

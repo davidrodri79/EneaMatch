@@ -36,4 +36,9 @@
         android:name="com.example.eneamatch.viewUserFragment"
         android:label="fragment_view_user"
         tools:layout="@layout/fragment_view_user" />
+    <fragment
+        android:id="@+id/searchOptionsFragment"
+        android:name="com.example.eneamatch.searchOptionsFragment"
+        android:label="fragment_search_options"
+        tools:layout="@layout/fragment_search_options" />
 </navigation>

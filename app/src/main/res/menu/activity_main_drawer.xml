@@ -6,10 +6,13 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/searchFragment"
-            android:title="Search" />
+            android:title="Candidatos" />
         <item
             android:id="@+id/profileFragment"
-            android:title="Perfil" />
+            android:title="Mi perfil" />
+        <item
+            android:id="@+id/searchOptionsFragment"
+            android:title="¿Qué busco?" />
         <item
             android:id="@+id/signOutFragment"
             android:title="Cerrar sesion" />

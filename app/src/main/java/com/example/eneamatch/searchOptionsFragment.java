@@ -42,7 +42,7 @@ public class searchOptionsFragment extends Fragment {
         navController = Navigation.findNavController(view);  // <-----------------
 
         minAgeEditText = view.findViewById(R.id.minAgeEditText);
-        minAgeEditText = view.findViewById(R.id.maxAgeEditText);
+        maxAgeEditText = view.findViewById(R.id.maxAgeEditText);
 
         if(appViewModel.isProfileRetrieved())
         {

@@ -9,18 +9,25 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class searchOptionsFragment extends Fragment {
 
     AppViewModel appViewModel;
     NavController navController;
     EditText minAgeEditText, maxAgeEditText;
+    Spinner genderSpinner;
+    Button saveSearchButton;
 
     Search userSearch = null;
 
@@ -41,10 +48,25 @@ public class searchOptionsFragment extends Fragment {
 
         navController = Navigation.findNavController(view);  // <-----------------
 
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
         minAgeEditText = view.findViewById(R.id.minAgeEditText);
         maxAgeEditText = view.findViewById(R.id.maxAgeEditText);
+        genderSpinner = view.findViewById(R.id.genreSpinner);
+        saveSearchButton = view.findViewById(R.id.saveSearchButton);
 
-        if(appViewModel.isProfileRetrieved())
+        saveSearchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                boolean error = false;
+
+                if(!error)
+                    updateSearch(user);
+            }
+        });
+
+        if(appViewModel.isSearchRetrieved())
         {
             userSearch = appViewModel.getUserSearch();
 
@@ -56,11 +78,23 @@ public class searchOptionsFragment extends Fragment {
 
             minAgeEditText.setText("" + userSearch.minAge);
             maxAgeEditText.setText("" + userSearch.maxAge);
+            genderSpinner.setSelection( userSearch.gender );
+
         }
         else
         {
             userSearch = new Search();
             //userProfile.uid = user.getUid();
         }
+    }
+
+    void updateSearch(FirebaseUser user)
+    {
+        userSearch.gender = genderSpinner.getSelectedItemPosition();
+        userSearch.minAge = Integer.parseInt( minAgeEditText.getText().toString() );
+        userSearch.maxAge = Integer.parseInt( maxAgeEditText.getText().toString() );
+
+        appViewModel.setUserSearch(userSearch);
+
     }
 }

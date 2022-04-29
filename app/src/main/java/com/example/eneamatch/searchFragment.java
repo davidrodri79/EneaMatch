@@ -60,7 +60,15 @@ public class searchFragment extends Fragment {
 
         RecyclerView postsRecyclerView = view.findViewById(R.id.postsRecyclerView);
 
-        Query query = FirebaseFirestore.getInstance().collection("profiles").limit(50);
+        Search userSearch = appViewModel.getUserSearch();
+        if(userSearch == null)
+            userSearch = new Search();
+
+        Query query = FirebaseFirestore.getInstance().collection("profiles")
+                .whereEqualTo("gender", userSearch.gender)
+                .whereGreaterThanOrEqualTo("age", userSearch.minAge)
+                .whereLessThanOrEqualTo("age", userSearch.maxAge)
+                .limit(50);
 
         FirestoreRecyclerOptions<Profile> options = new FirestoreRecyclerOptions.Builder<Profile>()
                 .setQuery(query, Profile.class)

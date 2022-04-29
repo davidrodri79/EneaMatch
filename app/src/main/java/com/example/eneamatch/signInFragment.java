@@ -18,6 +18,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 
@@ -29,6 +31,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,11 +40,15 @@ import com.google.firebase.auth.GoogleAuthProvider;
 public class signInFragment extends Fragment {
 
     NavController navController;   // <-----------------
+    private EditText emailEditText, passwordEditText;
+    private Button emailSignInButton;
     private SignInButton googleSignInButton;
     private ProgressBar signInProgressBar;
     private LinearLayout signInForm;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private FirebaseAuth mAuth;
+
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -66,11 +73,22 @@ public class signInFragment extends Fragment {
 
         mAuth = FirebaseAuth.getInstance();
 
+        emailEditText = view.findViewById(R.id.emailEditText);
+        passwordEditText = view.findViewById(R.id.passwordEditText);
+        emailSignInButton = view.findViewById(R.id.emailSignInButton);
+        signInForm = view.findViewById(R.id.signInForm);
         googleSignInButton = view.findViewById(R.id.googleSignInButton);
         signInProgressBar = view.findViewById(R.id.signInProgressBar);
         signInForm = view.findViewById(R.id.signInForm);
 
         signInProgressBar.setVisibility(View.GONE);
+
+        emailSignInButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                accederConEmail();
+            }
+        });
 
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
@@ -95,6 +113,25 @@ public class signInFragment extends Fragment {
                 accederConGoogle();
             }
         });
+    }
+
+    private void accederConEmail() {
+        signInForm.setVisibility(View.GONE);
+        signInProgressBar.setVisibility(View.VISIBLE);
+
+        mAuth.signInWithEmailAndPassword(emailEditText.getText().toString(), passwordEditText.getText().toString())
+                .addOnCompleteListener(requireActivity(), new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            actualizarUI(mAuth.getCurrentUser());
+                        } else {
+                            Snackbar.make(requireView(), "Error: " + task.getException(), Snackbar.LENGTH_LONG).show();
+                        }
+                        signInForm.setVisibility(View.VISIBLE);
+                        signInProgressBar.setVisibility(View.GONE);
+                    }
+                });
     }
 
     private void accederConGoogle()

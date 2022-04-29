@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
@@ -54,6 +55,14 @@ public class searchOptionsFragment extends Fragment {
         maxAgeEditText = view.findViewById(R.id.maxAgeEditText);
         genderSpinner = view.findViewById(R.id.genreSpinner);
         saveSearchButton = view.findViewById(R.id.saveSearchButton);
+
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
+                R.array.genres_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        genderSpinner.setAdapter(adapter);
 
         saveSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override

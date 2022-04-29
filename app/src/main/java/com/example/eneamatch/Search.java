@@ -8,5 +8,7 @@ public class Search {
 
     public Search()
     {
+        minAge = 18;
+        maxAge = 99;
     }
 }

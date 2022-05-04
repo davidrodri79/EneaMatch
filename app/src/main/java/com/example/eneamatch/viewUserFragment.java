@@ -6,10 +6,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,8 +23,10 @@ public class viewUserFragment extends Fragment {
 
     TextView nickTextView, genderTextView, ageTextView, aboutTextView;
     ImageView photoImageView;
+    Button chatButton;
 
     AppViewModel appViewModel;
+    NavController navController;   // <-----------------
 
     Profile viewingProfile;
 
@@ -46,6 +50,7 @@ public class viewUserFragment extends Fragment {
         genderTextView = view.findViewById(R.id.genreTextView);
         aboutTextView = view.findViewById(R.id.aboutTextView);
         photoImageView = view.findViewById(R.id.photoImageView);
+        chatButton = view.findViewById(R.id.chatButton);
 
         String[] genresArray = getResources().getStringArray(R.array.genres_array);
 
@@ -56,5 +61,11 @@ public class viewUserFragment extends Fragment {
         if(viewingProfile.photoUrl != null)
             Glide.with(requireView()).load(viewingProfile.photoUrl).into(photoImageView);
 
+        chatButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                navController.navigate(R.id.userChatFragment);
+            }
+        });
     }
 }

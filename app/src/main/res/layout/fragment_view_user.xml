@@ -55,6 +55,11 @@
                 android:textSize="20sp"
                 android:lines="6"
                 android:gravity="top|left"/>
+            <Button
+                android:id="@+id/chatButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Chat"/>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

@@ -42,6 +42,10 @@ public class signOutFragment extends Fragment {
 
         FirebaseAuth.getInstance().signOut();
 
+        appViewModel.clearRetrievedProfile();
+        appViewModel.clearSearchRetrieved();
+
+
         Navigation.findNavController(view).navigate(R.id.signInFragment);
     }
 }

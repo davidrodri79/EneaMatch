@@ -78,6 +78,8 @@ public class AppViewModel extends AndroidViewModel {
         return searchRetrieved;
     }
 
+    public void clearSearchRetrieved() { searchRetrieved = false; }
+
     public Search getUserSearch()
     {
         return userSearch;

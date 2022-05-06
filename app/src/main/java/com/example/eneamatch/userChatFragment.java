@@ -27,6 +27,11 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 
 public class userChatFragment extends Fragment {
 
@@ -53,7 +58,15 @@ public class userChatFragment extends Fragment {
 
         RecyclerView chatRecyclerView = view.findViewById(R.id.chatRecyclerView);
 
+        myUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        otherUID = appViewModel.getViewingProfile().uid;
+
+        String chatId = myUID.compareTo( otherUID )  < 0 ? myUID + "-" + otherUID : otherUID + "-" + myUID;
+
         Query query = FirebaseFirestore.getInstance().collection("chats")
+                .document(chatId)
+                .collection("messages")
+                .orderBy("timestamp", Query.Direction.ASCENDING)
                 .limit(50);
 
         FirestoreRecyclerOptions<ChatMsg> options = new FirestoreRecyclerOptions.Builder<ChatMsg>()
@@ -63,8 +76,6 @@ public class userChatFragment extends Fragment {
 
         chatRecyclerView.setAdapter(new userChatFragment.ChatAdapter(options));
 
-        myUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        otherUID = appViewModel.getViewingProfile().uid;
 
         sendButton = view.findViewById(R.id.sendButton);
         msgText = view.findViewById(R.id.chatMsg);
@@ -73,10 +84,12 @@ public class userChatFragment extends Fragment {
             @Override
             public void onClick(View view) {
 
-                ChatMsg chatMsg = new ChatMsg(myUID, msgText.getText().toString());
+                Date currentTime = Calendar.getInstance().getTime();
+
+                ChatMsg chatMsg = new ChatMsg(myUID, msgText.getText().toString(), currentTime.getTime());
 
                 FirebaseFirestore.getInstance().collection("chats")
-                        .document(myUID + "-" + otherUID)
+                        .document(chatId)
                         .collection("messages")
                         .add(chatMsg)
                         .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
@@ -117,16 +130,25 @@ public class userChatFragment extends Fragment {
                 }
             });*/
             holder.messageTextView.setText(msg.text);
+
+            Date msgTime = new Date( msg.timestamp );
+
+            SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+            holder.timeTextView.setText( simpleDate.format( msgTime ));
+
         }
 
         class ChatMsgViewHolder extends RecyclerView.ViewHolder {
 
-            TextView messageTextView;
+            TextView messageTextView, timeTextView;
 
             ChatMsgViewHolder(@NonNull View itemView) {
                 super(itemView);
 
                 messageTextView = itemView.findViewById(R.id.messageTextView);
+                timeTextView = itemView.findViewById(R.id.timeTextView);
+
             }
         }
     }

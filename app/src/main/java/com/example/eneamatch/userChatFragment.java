@@ -23,6 +23,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
@@ -55,8 +56,8 @@ public class userChatFragment extends Fragment {
         Query query = FirebaseFirestore.getInstance().collection("chats")
                 .limit(50);
 
-        FirestoreRecyclerOptions<Profile> options = new FirestoreRecyclerOptions.Builder<Profile>()
-                .setQuery(query, Profile.class)
+        FirestoreRecyclerOptions<ChatMsg> options = new FirestoreRecyclerOptions.Builder<ChatMsg>()
+                .setQuery(query, ChatMsg.class)
                 .setLifecycleOwner(this)
                 .build();
 
@@ -77,14 +78,15 @@ public class userChatFragment extends Fragment {
                 FirebaseFirestore.getInstance().collection("chats")
                         .document(myUID + "-" + otherUID)
                         .collection("messages")
-                        .document("1")
-                        .set(chatMsg)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        .add(chatMsg)
+                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                             @Override
-                            public void onSuccess(Void aVoid) {
+                            public void onSuccess(DocumentReference documentReference) {
                                 //navController.popBackStack();
                             }
                         });
+
+                msgText.setText("");
             }
         });
     }
@@ -114,16 +116,17 @@ public class userChatFragment extends Fragment {
                     navController.navigate(R.id.viewUserFragment);
                 }
             });*/
+            holder.messageTextView.setText(msg.text);
         }
 
         class ChatMsgViewHolder extends RecyclerView.ViewHolder {
 
-            //TextView nickTextView, ageTextView;
+            TextView messageTextView;
 
             ChatMsgViewHolder(@NonNull View itemView) {
                 super(itemView);
 
-                //ageTextView = itemView.findViewById(R.id.ageTextView);
+                messageTextView = itemView.findViewById(R.id.messageTextView);
             }
         }
     }

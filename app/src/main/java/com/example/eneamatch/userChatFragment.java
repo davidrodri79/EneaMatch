@@ -1,15 +1,18 @@
 package com.example.eneamatch;
 
+import android.opengl.Visibility;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.cardview.widget.CardView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,23 +134,59 @@ public class userChatFragment extends Fragment {
             });*/
             holder.messageTextView.setText(msg.text);
 
-            Date msgTime = new Date( msg.timestamp );
+            Date msgTime = new Date(msg.timestamp);
+            Date currentTime = Calendar.getInstance().getTime();
 
-            SimpleDateFormat simpleDate =  new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            SimpleDateFormat simpleDate;
+
+            if (msgTime.getDay() != currentTime.getDay() ||
+                    msgTime.getMonth() != currentTime.getMonth() ||
+                    msgTime.getYear() != currentTime.getYear()) {
+                simpleDate = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+            }
+            else
+            {
+                simpleDate = new SimpleDateFormat("HH:mm");
+            }
+
 
             holder.timeTextView.setText( simpleDate.format( msgTime ));
+
+            if(msg.uid.equals( myUID ))
+            {
+                holder.chatCardView.setCardBackgroundColor(getResources().getColor(R.color.teal_700));
+                holder.messageTextView.setTextColor(getResources().getColor(R.color.white));
+                holder.timeTextView.setTextColor(getResources().getColor(R.color.white));
+                holder.messageTextView.setGravity(Gravity.RIGHT);
+                holder.timeTextView.setGravity(Gravity.RIGHT);
+                holder.chatOtherPhoto.setVisibility(View.GONE);
+            }
+            else
+            {
+                holder.chatCardView.setCardBackgroundColor(getResources().getColor(R.color.gray));
+                holder.messageTextView.setTextColor(getResources().getColor(R.color.black));
+                holder.timeTextView.setTextColor(getResources().getColor(R.color.black));
+                holder.messageTextView.setGravity(Gravity.LEFT);
+                holder.timeTextView.setGravity(Gravity.LEFT);
+                holder.chatOwnPhoto.setVisibility(View.GONE);
+            }
 
         }
 
         class ChatMsgViewHolder extends RecyclerView.ViewHolder {
 
             TextView messageTextView, timeTextView;
+            CardView chatCardView;
+            ImageView chatOwnPhoto, chatOtherPhoto;
 
             ChatMsgViewHolder(@NonNull View itemView) {
                 super(itemView);
 
+                chatCardView = itemView.findViewById(R.id.chatCard);
                 messageTextView = itemView.findViewById(R.id.messageTextView);
                 timeTextView = itemView.findViewById(R.id.timeTextView);
+                chatOwnPhoto = itemView.findViewById(R.id.chatOwnPhoto);
+                chatOtherPhoto = itemView.findViewById(R.id.chatOtherPhoto);
 
             }
         }

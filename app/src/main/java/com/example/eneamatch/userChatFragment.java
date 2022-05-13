@@ -43,6 +43,7 @@ public class userChatFragment extends Fragment {
     String myUID, otherUID;
     Button sendButton;
     EditText msgText;
+    Profile myProfile, otherProfile;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,8 +62,12 @@ public class userChatFragment extends Fragment {
 
         RecyclerView chatRecyclerView = view.findViewById(R.id.chatRecyclerView);
 
+
+        myProfile = appViewModel.getUserProfile();
+        otherProfile = appViewModel.getViewingProfile();
+
         myUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        otherUID = appViewModel.getViewingProfile().uid;
+        otherUID = otherProfile.uid;
 
         String chatId = myUID.compareTo( otherUID )  < 0 ? myUID + "-" + otherUID : otherUID + "-" + myUID;
 
@@ -154,15 +159,22 @@ public class userChatFragment extends Fragment {
 
             if(msg.uid.equals( myUID ))
             {
+                if(myProfile.photoUrl != null)
+                    Glide.with(getContext()).load(myProfile.photoUrl).circleCrop().into(holder.chatOwnPhoto);
+
                 holder.chatCardView.setCardBackgroundColor(getResources().getColor(R.color.teal_700));
                 holder.messageTextView.setTextColor(getResources().getColor(R.color.white));
                 holder.timeTextView.setTextColor(getResources().getColor(R.color.white));
                 holder.messageTextView.setGravity(Gravity.RIGHT);
                 holder.timeTextView.setGravity(Gravity.RIGHT);
                 holder.chatOtherPhoto.setVisibility(View.GONE);
+
             }
             else
             {
+                if(otherProfile.photoUrl != null)
+                    Glide.with(getContext()).load(otherProfile.photoUrl).circleCrop().into(holder.chatOtherPhoto);
+
                 holder.chatCardView.setCardBackgroundColor(getResources().getColor(R.color.gray));
                 holder.messageTextView.setTextColor(getResources().getColor(R.color.black));
                 holder.timeTextView.setTextColor(getResources().getColor(R.color.black));

@@ -5,9 +5,17 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/audio.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable-v24/camera.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable-v24/image.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable-v24/like_off.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable-v24/like_on.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable-v24/pen.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable-v24/user.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable/add_a_photo.xml" value="0.2140625" />
+        <entry key="app/src/main/res/drawable/ic_menu_camera.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable/ic_menu_gallery.xml" value="0.2140625" />
         <entry key="app/src/main/res/drawable/ic_menu_slideshow.xml" value="0.2140625" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1743659420289855" />
+        <entry key="app/src/main/res/layout/app_bar_main.xml" value="0.1743659420289855" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.35572916666666665" />
         <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.19791666666666666" />
@@ -20,6 +28,7 @@
         <entry key="app/src/main/res/layout/viewholder_chatmsg.xml" value="0.20471014492753623" />
         <entry key="app/src/main/res/layout/viewholder_profile.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/menu/activity_main_drawer.xml" value="0.19791666666666666" />
+        <entry key="app/src/main/res/menu/main.xml" value="0.19791666666666666" />
         <entry key="app/src/main/res/xml/paths.xml" value="0.19791666666666666" />
       </map>
     </option>

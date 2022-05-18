@@ -62,7 +62,7 @@ public class profileFragment extends Fragment {
 
         navController = Navigation.findNavController(view);  // <-----------------
 
-        photoImageView = view.findViewById(R.id.photoImageView);
+        photoImageView = view.findViewById(R.id.photoImageView0);
         nickTextView = view.findViewById(R.id.nickEditText);
         ageTextView = view.findViewById(R.id.ageEditText);
         aboutTextView = view.findViewById(R.id.aboutEditText);
@@ -170,9 +170,9 @@ public class profileFragment extends Fragment {
                         .continueWithTask(task ->
                                 task.getResult().getStorage().getDownloadUrl())
                         .addOnSuccessListener(url -> {
-                            userProfile.photoUrl = url.toString();
+                            userProfile.photoUrl.set(0, url.toString());
 
-                            Glide.with(requireView()).load(userProfile.photoUrl).into(photoImageView);
+                            Glide.with(requireView()).load(userProfile.photoUrl.get(0)).into(photoImageView);
                             });
             });
 

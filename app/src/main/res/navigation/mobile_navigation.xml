@@ -46,4 +46,9 @@
         android:name="com.example.eneamatch.userChatFragment"
         android:label="fragment_user_chat"
         tools:layout="@layout/fragment_user_chat" />
+    <fragment
+        android:id="@+id/userPhotoFragment"
+        android:name="com.example.eneamatch.userPhotoFragment"
+        android:label="fragment_user_photo"
+        tools:layout="@layout/fragment_user_photo" />
 </navigation>

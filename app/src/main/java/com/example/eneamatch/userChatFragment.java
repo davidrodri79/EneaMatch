@@ -159,8 +159,8 @@ public class userChatFragment extends Fragment {
 
             if(msg.uid.equals( myUID ))
             {
-                if(myProfile.photoUrl != null)
-                    Glide.with(getContext()).load(myProfile.photoUrl).circleCrop().into(holder.chatOwnPhoto);
+                if(myProfile.photoUrl.get(0) != null)
+                    Glide.with(getContext()).load(myProfile.photoUrl.get(0)).circleCrop().into(holder.chatOwnPhoto);
 
                 holder.chatCardView.setCardBackgroundColor(getResources().getColor(R.color.teal_700));
                 holder.messageTextView.setTextColor(getResources().getColor(R.color.white));

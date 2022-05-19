@@ -16,7 +16,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:rowCount="2"
-                android:columnCount="2">
+                android:columnCount="3">
                 <ImageView
                     android:id="@+id/photoImageView0"
                     android:layout_width="100dp"
@@ -37,7 +37,17 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     app:srcCompat="@drawable/add_a_photo" />
-            </GridLayout>
+                <ImageView
+                    android:id="@+id/photoImageView4"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:srcCompat="@drawable/add_a_photo" />
+                <ImageView
+                    android:id="@+id/photoImageView5"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    app:srcCompat="@drawable/add_a_photo" />
+                </GridLayout>
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

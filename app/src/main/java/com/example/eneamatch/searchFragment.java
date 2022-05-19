@@ -92,8 +92,8 @@ public class searchFragment extends Fragment {
         protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull final Profile profile) {
 
             String[] genresArray = getResources().getStringArray(R.array.genres_array);
-            if(profile.photoUrl != null)
-                Glide.with(getContext()).load(profile.photoUrl)/*.circleCrop()*/.into(holder.authorPhotoImageView);
+            if(profile.photoUrl.get(0) != null)
+                Glide.with(getContext()).load(profile.photoUrl.get(0))/*.circleCrop()*/.into(holder.authorPhotoImageView);
             holder.nickTextView.setText(profile.nick);
             holder.ageTextView.setText(genresArray[profile.gender] +", "+profile.age+" años");
 

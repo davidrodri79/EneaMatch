@@ -23,7 +23,7 @@ import com.bumptech.glide.Glide;
 public class viewUserFragment extends Fragment {
 
     TextView nickTextView, genderTextView, ageTextView, aboutTextView;
-    ImageView photoImageView;
+    ImageView photoImageView[] = new ImageView[Profile.PROFILE_NUM_PICTURES];
     Button chatButton;
 
     AppViewModel appViewModel;
@@ -52,7 +52,10 @@ public class viewUserFragment extends Fragment {
         ageTextView = view.findViewById(R.id.ageTextView);
         genderTextView = view.findViewById(R.id.genreTextView);
         aboutTextView = view.findViewById(R.id.aboutTextView);
-        photoImageView = view.findViewById(R.id.photoImageView);
+        int widgetIds[]={R.id.photoImageView0, R.id.photoImageView1, R.id.photoImageView2,
+                R.id.photoImageView3, R.id.photoImageView4, R.id.photoImageView5,};
+        for(int i = 0; i < Profile.PROFILE_NUM_PICTURES; i++)
+            photoImageView[i] = view.findViewById(widgetIds[i]);
         chatButton = view.findViewById(R.id.chatButton);
 
         String[] genresArray = getResources().getStringArray(R.array.genres_array);
@@ -61,8 +64,36 @@ public class viewUserFragment extends Fragment {
         ageTextView.setText(viewingProfile.age+" años");
         genderTextView.setText(genresArray[viewingProfile.gender]);
         aboutTextView.setText(viewingProfile.aboutMe);
-        if(viewingProfile.photoUrl != null)
-            Glide.with(requireView()).load(viewingProfile.photoUrl).into(photoImageView);
+        for(int i = 0; i < Profile.PROFILE_NUM_PICTURES; i++) {
+
+            if (viewingProfile.photoUrl.get(i) != null)
+                Glide.with(requireView()).load(viewingProfile.photoUrl.get(i)).into(photoImageView[i]);
+        }
+
+        photoImageView[0].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { appViewModel.setSelectedPicture(0); navController.navigate(R.id.userPhotoFragment); }
+        });
+        photoImageView[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { appViewModel.setSelectedPicture(1); navController.navigate(R.id.userPhotoFragment); }
+        });
+        photoImageView[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { appViewModel.setSelectedPicture(2); navController.navigate(R.id.userPhotoFragment); }
+        });
+        photoImageView[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { appViewModel.setSelectedPicture(3); navController.navigate(R.id.userPhotoFragment); }
+        });
+        photoImageView[4].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { appViewModel.setSelectedPicture(4); navController.navigate(R.id.userPhotoFragment); }
+        });
+        photoImageView[5].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { appViewModel.setSelectedPicture(5); navController.navigate(R.id.userPhotoFragment); }
+        });
 
         chatButton.setOnClickListener(new View.OnClickListener() {
             @Override

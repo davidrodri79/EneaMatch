@@ -39,13 +39,15 @@ public class profileFragment extends Fragment {
     /*ImageView photoImageView;
     TextView displayNameTextView, emailTextView;*/
     EditText nickTextView, genderTextView, ageTextView, aboutTextView;
-    ImageView photoImageView;
+    ImageView photoImageView[] = new ImageView[Profile.PROFILE_NUM_PICTURES];
     Spinner genderSpinner;
     Button saveProfileButton;
     NavController navController;   // <-----------------
     Profile userProfile;
 
     public AppViewModel appViewModel;
+
+    int currentPhotoId;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,7 +64,9 @@ public class profileFragment extends Fragment {
 
         navController = Navigation.findNavController(view);  // <-----------------
 
-        photoImageView = view.findViewById(R.id.photoImageView0);
+        int photo_widgets[] = {R.id.photoImageView0, R.id.photoImageView1,R.id.photoImageView2, R.id.photoImageView3, R.id.photoImageView4, R.id.photoImageView5,};
+        for(int i = 0; i < Profile.PROFILE_NUM_PICTURES; i++)
+            photoImageView[i] = view.findViewById(photo_widgets[i]);
         nickTextView = view.findViewById(R.id.nickEditText);
         ageTextView = view.findViewById(R.id.ageEditText);
         aboutTextView = view.findViewById(R.id.aboutEditText);
@@ -100,8 +104,10 @@ public class profileFragment extends Fragment {
                 userProfile.uid = user.getUid();
             }
 
-            if(userProfile.photoUrl != null)
-                Glide.with(requireView()).load(userProfile.photoUrl).into(photoImageView);
+            for(int i = 0; i < Profile.PROFILE_NUM_PICTURES; i++) {
+                if (userProfile.photoUrl.get(i) != null)
+                    Glide.with(requireView()).load(userProfile.photoUrl.get(0)).into(photoImageView[i]);
+            }
             nickTextView.setText(userProfile.nick);
             ageTextView.setText("" + userProfile.age);
             genderSpinner.setSelection(userProfile.gender);
@@ -113,11 +119,52 @@ public class profileFragment extends Fragment {
             userProfile.uid = user.getUid();
         }
 
-        photoImageView.setOnClickListener(new View.OnClickListener() {
+
+        photoImageView[0].setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view)
             {
-                seleccionarImagen();
+                currentPhotoId = 0; seleccionarImagen();
+            }
+        });
+
+        photoImageView[1].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                currentPhotoId = 1; seleccionarImagen();
+            }
+        });
+
+        photoImageView[2].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                currentPhotoId = 2; seleccionarImagen();
+            }
+        });
+
+        photoImageView[3].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                currentPhotoId = 3; seleccionarImagen();
+            }
+        });
+
+        photoImageView[4].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                currentPhotoId = 4; seleccionarImagen();
+            }
+        });
+
+        photoImageView[5].setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view)
+            {
+                currentPhotoId = 5; seleccionarImagen();
             }
         });
 
@@ -160,19 +207,20 @@ public class profileFragment extends Fragment {
             registerForActivityResult(new ActivityResultContracts.GetContent(), uri -> {
                 //appViewModel.setMediaSeleccionado(uri, mediaTipo);
 
+
                 //Delete previous picture
-                if(userProfile.photoUrl != null)
-                    FirebaseStorage.getInstance().getReference(userProfile.uid + "/pictures/0").delete();
+                if(userProfile.photoUrl.get(currentPhotoId) != null)
+                    FirebaseStorage.getInstance().getReference(userProfile.uid + "/pictures/" + currentPhotoId).delete();
 
                 // Upload new picture
-                FirebaseStorage.getInstance().getReference(userProfile.uid + "/pictures/0")
+                FirebaseStorage.getInstance().getReference(userProfile.uid + "/pictures/" + currentPhotoId)
                         .putFile(uri)
                         .continueWithTask(task ->
                                 task.getResult().getStorage().getDownloadUrl())
                         .addOnSuccessListener(url -> {
-                            userProfile.photoUrl.set(0, url.toString());
+                            userProfile.photoUrl.set(currentPhotoId, url.toString());
 
-                            Glide.with(requireView()).load(userProfile.photoUrl.get(0)).into(photoImageView);
+                            Glide.with(requireView()).load(userProfile.photoUrl.get(currentPhotoId)).into(photoImageView[currentPhotoId]);
                             });
             });
 

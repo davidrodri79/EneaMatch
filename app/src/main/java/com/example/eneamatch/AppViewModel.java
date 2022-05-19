@@ -22,6 +22,7 @@ public class AppViewModel extends AndroidViewModel {
     private Profile userProfile = null, viewingProfile = null;
     private Search userSearch = null;
     private boolean profileRetrieved = false, searchRetrieved = false;
+    private int selectedPicture;
 
 
     public AppViewModel(@NonNull Application application)
@@ -124,4 +125,15 @@ public class AppViewModel extends AndroidViewModel {
     {
         viewingProfile = p;
     }
+
+    public void setSelectedPicture(int p)
+    {
+        selectedPicture = p;
+    }
+
+    public int getSelectedPicture()
+    {
+        return selectedPicture;
+    }
+
 }

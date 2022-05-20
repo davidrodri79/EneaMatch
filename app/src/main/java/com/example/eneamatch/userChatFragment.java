@@ -107,13 +107,21 @@ public class userChatFragment extends Fragment {
                             }
                         });
 
+                ChatEntry chatEntry = new ChatEntry(myUID, otherProfile, msgText.getText().toString(), currentTime.getTime());
+
                 FirebaseFirestore.getInstance().collection( "profiles")
                         .document(myUID)
-                        .update("chats."+otherUID, true);
+                        .collection("chats")
+                        .document( otherUID )
+                        .set( chatEntry );
+
+                chatEntry.companion = myProfile;
 
                 FirebaseFirestore.getInstance().collection( "profiles")
                         .document(otherUID)
-                        .update("chats."+myUID, true);
+                        .collection("chats")
+                        .document( myUID )
+                        .set( chatEntry );
 
                 msgText.setText("");
             }

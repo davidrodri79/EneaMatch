@@ -14,7 +14,6 @@ public class Profile {
     public int gender;
     public String aboutMe;
     public int age;
-    public HashMap<String, Boolean> myChats = new HashMap<>();
 
     // Constructor vacio requerido por Firestore
     public Profile() {

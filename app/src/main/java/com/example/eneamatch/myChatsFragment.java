@@ -13,16 +13,24 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+
+import java.text.SimpleDateFormat;
 
 
 public class myChatsFragment extends Fragment {
 
     NavController navController;   // <-----------------
     public AppViewModel appViewModel;
+
+    String myUID;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,18 +47,71 @@ public class myChatsFragment extends Fragment {
 
         appViewModel = new ViewModelProvider(requireActivity()).get(AppViewModel.class);
 
-        /*Query query = FirebaseFirestore.getInstance().collection("profiles")
-                .whereEqualTo("gender", userSearch.gender)
-                .whereGreaterThanOrEqualTo("age", userSearch.minAge)
-                .whereLessThanOrEqualTo("age", userSearch.maxAge)
-                .limit(50);
+        Profile myProfile = appViewModel.getUserProfile();
 
-        FirestoreRecyclerOptions<Profile> options = new FirestoreRecyclerOptions.Builder<Profile>()
-                .setQuery(query, Profile.class)
+        myUID = myProfile.uid;
+
+        Query query = FirebaseFirestore.getInstance().collection("profiles")
+                .document( myUID )
+                .collection( "chats")
+                .limit(50)
+                .orderBy("timestamp", Query.Direction.DESCENDING);
+
+        FirestoreRecyclerOptions<ChatEntry> options = new FirestoreRecyclerOptions.Builder<ChatEntry>()
+                .setQuery(query, ChatEntry.class)
                 .setLifecycleOwner(this)
                 .build();
 
-        postsRecyclerView.setAdapter(new searchFragment.ProfileAdapter(options));*/
+        RecyclerView postsRecyclerView = view.findViewById(R.id.chatEntryRecyclerView);
 
+        postsRecyclerView.setAdapter(new myChatsFragment.ChatEntryAdapter(options));
+
+    }
+
+    class ChatEntryAdapter extends FirestoreRecyclerAdapter<ChatEntry, myChatsFragment.ChatEntryAdapter.ChatEntryViewHolder> {
+        public ChatEntryAdapter(@NonNull FirestoreRecyclerOptions<ChatEntry> options) {super(options);}
+
+        @NonNull
+        @Override
+        public myChatsFragment.ChatEntryAdapter.ChatEntryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            return new myChatsFragment.ChatEntryAdapter.ChatEntryViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.viewholder_chatentry, parent, false));
+        }
+
+        @Override
+        protected void onBindViewHolder(@NonNull myChatsFragment.ChatEntryAdapter.ChatEntryViewHolder holder, int position, @NonNull final ChatEntry msg) {
+
+            SimpleDateFormat simpleDate;
+            simpleDate = new SimpleDateFormat("dd/MM/yyyy HH:mm");
+
+            holder.timeTextView.setText( simpleDate.format( msg.timestamp ));
+            holder.msgTextView.setText((msg.uid.equals(myUID) ? "Yo: " : msg.companion.nick+": ") + msg.text);
+            holder.nickTextView.setText(msg.companion.nick);
+            if(msg.companion.photoUrl.get(0) != null)
+                Glide.with(getContext()).load(msg.companion.photoUrl.get(0))/*.circleCrop()*/.into(holder.companionPhotoImageView);
+
+
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    appViewModel.setViewingProfile(msg.companion);
+                    navController.navigate(R.id.userChatFragment);
+                }
+            });
+        }
+
+        class ChatEntryViewHolder extends RecyclerView.ViewHolder {
+            ImageView companionPhotoImageView;
+            TextView nickTextView, msgTextView, timeTextView;
+
+            ChatEntryViewHolder(@NonNull View itemView) {
+                super(itemView);
+
+                companionPhotoImageView = itemView.findViewById(R.id.photoImageView);
+                nickTextView = itemView.findViewById(R.id.nickTextView);
+                msgTextView = itemView.findViewById(R.id.messageTextView);
+                timeTextView = itemView.findViewById(R.id.timeTextView);
+
+            }
+        }
     }
 }

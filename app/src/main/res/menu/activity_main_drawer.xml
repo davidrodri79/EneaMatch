@@ -8,6 +8,9 @@
             android:id="@+id/searchFragment"
             android:title="Candidatos" />
         <item
+            android:id="@+id/myChatsFragment"
+            android:title="Mis contactos" />
+        <item
             android:id="@+id/profileFragment"
             android:title="Mi perfil" />
         <item

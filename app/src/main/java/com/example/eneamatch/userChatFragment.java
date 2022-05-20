@@ -107,6 +107,14 @@ public class userChatFragment extends Fragment {
                             }
                         });
 
+                FirebaseFirestore.getInstance().collection( "profiles")
+                        .document(myUID)
+                        .update("chats."+otherUID, true);
+
+                FirebaseFirestore.getInstance().collection( "profiles")
+                        .document(otherUID)
+                        .update("chats."+myUID, true);
+
                 msgText.setText("");
             }
         });

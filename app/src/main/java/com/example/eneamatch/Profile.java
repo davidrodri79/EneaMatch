@@ -1,6 +1,7 @@
 package com.example.eneamatch;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class Profile {
@@ -13,6 +14,7 @@ public class Profile {
     public int gender;
     public String aboutMe;
     public int age;
+    public HashMap<String, Boolean> myChats = new HashMap<>();
 
     // Constructor vacio requerido por Firestore
     public Profile() {

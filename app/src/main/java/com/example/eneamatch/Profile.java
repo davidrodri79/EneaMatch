@@ -12,6 +12,8 @@ public class Profile {
     public String nick;
     public List<String> photoUrl;
     public int gender;
+    public int eneatype;
+    public int subtype;
     public String aboutMe;
     public int age;
 

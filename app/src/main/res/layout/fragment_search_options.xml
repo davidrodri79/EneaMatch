@@ -9,10 +9,9 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
-
 
             <TextView
                 android:layout_width="match_parent"
@@ -47,6 +46,61 @@
                 android:layout_height="wrap_content"
                 android:hint="Edad en años"
                 android:inputType="number"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Eneatipos"/>
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rowCount="2"
+                android:columnCount="3">
+            <CheckBox android:id="@+id/checkbox_e1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E1"
+                android:checked="true"/>
+            <CheckBox android:id="@+id/checkbox_e2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E2"
+                android:checked="true"/>
+            <CheckBox android:id="@+id/checkbox_e3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E3"
+                android:checked="true"/>
+            <CheckBox android:id="@+id/checkbox_e4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E4"
+                android:checked="true"/>
+            <CheckBox android:id="@+id/checkbox_e5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E5"
+                android:checked="true"/>
+            <CheckBox android:id="@+id/checkbox_e6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E6"
+                android:checked="true"/>
+            <CheckBox android:id="@+id/checkbox_e7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E7"
+                android:checked="true"/>
+            <CheckBox android:id="@+id/checkbox_e8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E8"
+                android:checked="true"/>
+            <CheckBox android:id="@+id/checkbox_e9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="E9"
+                android:checked="true"/>
+            </GridLayout>
             <Button
                 android:id="@+id/saveSearchButton"
                 android:layout_width="match_parent"

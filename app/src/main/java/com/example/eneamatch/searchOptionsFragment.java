@@ -15,6 +15,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Spinner;
 
@@ -28,6 +30,7 @@ public class searchOptionsFragment extends Fragment {
     NavController navController;
     EditText minAgeEditText, maxAgeEditText;
     Spinner genderSpinner;
+    CheckBox eneatypeCheck[] = new CheckBox[9];
     Button saveSearchButton;
 
     Search userSearch = null;
@@ -54,6 +57,16 @@ public class searchOptionsFragment extends Fragment {
         minAgeEditText = view.findViewById(R.id.minAgeEditText);
         maxAgeEditText = view.findViewById(R.id.maxAgeEditText);
         genderSpinner = view.findViewById(R.id.genreSpinner);
+        eneatypeCheck[0] = view.findViewById(R.id.checkbox_e1);
+        eneatypeCheck[1] = view.findViewById(R.id.checkbox_e2);
+        eneatypeCheck[2] = view.findViewById(R.id.checkbox_e3);
+        eneatypeCheck[3] = view.findViewById(R.id.checkbox_e4);
+        eneatypeCheck[4] = view.findViewById(R.id.checkbox_e5);
+        eneatypeCheck[5] = view.findViewById(R.id.checkbox_e6);
+        eneatypeCheck[6] = view.findViewById(R.id.checkbox_e7);
+        eneatypeCheck[7] = view.findViewById(R.id.checkbox_e8);
+        eneatypeCheck[8] = view.findViewById(R.id.checkbox_e9);
+
         saveSearchButton = view.findViewById(R.id.saveSearchButton);
 
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -63,6 +76,7 @@ public class searchOptionsFragment extends Fragment {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
         genderSpinner.setAdapter(adapter);
+
 
         saveSearchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +102,8 @@ public class searchOptionsFragment extends Fragment {
             minAgeEditText.setText("" + userSearch.minAge);
             maxAgeEditText.setText("" + userSearch.maxAge);
             genderSpinner.setSelection( userSearch.gender );
+            for(int i = 0; i < 9; i++)
+                eneatypeCheck[i].setChecked( userSearch.eneatypes.get(i) );
 
         }
         else
@@ -102,6 +118,8 @@ public class searchOptionsFragment extends Fragment {
         userSearch.gender = genderSpinner.getSelectedItemPosition();
         userSearch.minAge = Integer.parseInt( minAgeEditText.getText().toString() );
         userSearch.maxAge = Integer.parseInt( maxAgeEditText.getText().toString() );
+        for(int i = 0; i < 9; i++)
+            userSearch.eneatypes.set(i , eneatypeCheck[i].isChecked());
 
         appViewModel.setUserSearch(userSearch);
 

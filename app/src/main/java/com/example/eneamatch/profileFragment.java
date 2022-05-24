@@ -40,7 +40,7 @@ public class profileFragment extends Fragment {
     TextView displayNameTextView, emailTextView;*/
     EditText nickTextView, genderTextView, ageTextView, aboutTextView;
     ImageView photoImageView[] = new ImageView[Profile.PROFILE_NUM_PICTURES];
-    Spinner genderSpinner;
+    Spinner genderSpinner, eneatypeSpinner, subtypeSpinner;
     Button saveProfileButton;
     NavController navController;   // <-----------------
     Profile userProfile;
@@ -94,6 +94,24 @@ public class profileFragment extends Fragment {
         // Apply the adapter to the spinner
         genderSpinner.setAdapter(adapter);
 
+        eneatypeSpinner = (Spinner) view.findViewById(R.id.eneatypeSpinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(),
+                R.array.eneatype_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        eneatypeSpinner.setAdapter(adapter2);
+
+        subtypeSpinner = (Spinner) view.findViewById(R.id.subtypeSpinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(getContext(),
+                R.array.subtype_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        subtypeSpinner.setAdapter(adapter3);
+
 
         if(appViewModel.isProfileRetrieved())
         {
@@ -106,11 +124,13 @@ public class profileFragment extends Fragment {
 
             for(int i = 0; i < Profile.PROFILE_NUM_PICTURES; i++) {
                 if (userProfile.photoUrl.get(i) != null)
-                    Glide.with(requireView()).load(userProfile.photoUrl.get(0)).into(photoImageView[i]);
+                    Glide.with(requireView()).load(userProfile.photoUrl.get(i)).into(photoImageView[i]);
             }
             nickTextView.setText(userProfile.nick);
             ageTextView.setText("" + userProfile.age);
             genderSpinner.setSelection(userProfile.gender);
+            eneatypeSpinner.setSelection(userProfile.eneatype);
+            subtypeSpinner.setSelection(userProfile.subtype);
             aboutTextView.setText(userProfile.aboutMe);
         }
         else
@@ -185,8 +205,10 @@ public class profileFragment extends Fragment {
                     error = true;
                 }
 
-                if(!error)
+                if(!error) {
                     updateProfile(user);
+
+                }
             }
         });
 
@@ -196,6 +218,9 @@ public class profileFragment extends Fragment {
     {
         userProfile.nick = nickTextView.getText().toString();
         userProfile.gender = genderSpinner.getSelectedItemPosition();
+        userProfile.eneatype = eneatypeSpinner.getSelectedItemPosition();
+        userProfile.subtype = subtypeSpinner.getSelectedItemPosition();
+
         userProfile.age = Integer.parseInt( ageTextView.getText().toString() );
         userProfile.aboutMe = aboutTextView.getText().toString();
 

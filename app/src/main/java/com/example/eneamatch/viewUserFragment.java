@@ -22,7 +22,7 @@ import com.bumptech.glide.Glide;
 
 public class viewUserFragment extends Fragment {
 
-    TextView nickTextView, genderTextView, ageTextView, aboutTextView;
+    TextView nickTextView, genderTextView, ageTextView, eneatypeTextView, subtypeTextView, aboutTextView;
     ImageView photoImageView[] = new ImageView[Profile.PROFILE_NUM_PICTURES];
     Button chatButton;
 
@@ -51,6 +51,8 @@ public class viewUserFragment extends Fragment {
         nickTextView = view.findViewById(R.id.nickTextView);
         ageTextView = view.findViewById(R.id.ageTextView);
         genderTextView = view.findViewById(R.id.genreTextView);
+        eneatypeTextView = view.findViewById(R.id.eneatypeTextView);
+        subtypeTextView = view.findViewById(R.id.subtypeTextView);
         aboutTextView = view.findViewById(R.id.aboutTextView);
         int widgetIds[]={R.id.photoImageView0, R.id.photoImageView1, R.id.photoImageView2,
                 R.id.photoImageView3, R.id.photoImageView4, R.id.photoImageView5,};
@@ -59,10 +61,14 @@ public class viewUserFragment extends Fragment {
         chatButton = view.findViewById(R.id.chatButton);
 
         String[] genresArray = getResources().getStringArray(R.array.genres_array);
+        String[] eneatypesArray = getResources().getStringArray(R.array.eneatype_array);
+        String[] subtypesArray = getResources().getStringArray(R.array.subtype_array);
 
         nickTextView.setText(viewingProfile.nick);
         ageTextView.setText(viewingProfile.age+" años");
         genderTextView.setText(genresArray[viewingProfile.gender]);
+        eneatypeTextView.setText(eneatypesArray[viewingProfile.eneatype]);
+        subtypeTextView.setText(subtypesArray[viewingProfile.subtype]);
         aboutTextView.setText(viewingProfile.aboutMe);
         for(int i = 0; i < Profile.PROFILE_NUM_PICTURES; i++) {
 

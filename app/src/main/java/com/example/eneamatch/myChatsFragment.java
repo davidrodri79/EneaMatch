@@ -87,7 +87,7 @@ public class myChatsFragment extends Fragment {
             holder.msgTextView.setText((msg.uid.equals(myUID) ? "Yo: " : msg.companion.nick+": ") + msg.text);
             holder.nickTextView.setText(msg.companion.nick);
             if(msg.companion.photoUrl.get(0) != null)
-                Glide.with(getContext()).load(msg.companion.photoUrl.get(0))/*.circleCrop()*/.into(holder.companionPhotoImageView);
+                Glide.with(getContext()).load(msg.companion.photoUrl.get(0)).circleCrop().into(holder.companionPhotoImageView);
 
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {

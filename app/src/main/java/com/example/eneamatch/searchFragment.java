@@ -25,6 +25,9 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class searchFragment extends Fragment {
 
@@ -65,8 +68,19 @@ public class searchFragment extends Fragment {
         if(userSearch == null)
             userSearch = new Search();
 
+        ArrayList<Integer> wantedEneatypes = new ArrayList<Integer>();
+
+        wantedEneatypes.add(0);
+        for(int i = 0; i < 9; i++)
+        {
+            if(userSearch.eneatypes.get(i))
+            wantedEneatypes.add(i+1);
+        }
+
         Query query = FirebaseFirestore.getInstance().collection("profiles")
                 .whereEqualTo("gender", userSearch.gender)
+                //.whereIn("gender", Arrays.asList(0,1,2))
+                .whereIn("eneatype", wantedEneatypes)
                 .whereGreaterThanOrEqualTo("age", userSearch.minAge)
                 .whereLessThanOrEqualTo("age", userSearch.maxAge)
                 .limit(50);
@@ -93,10 +107,13 @@ public class searchFragment extends Fragment {
         protected void onBindViewHolder(@NonNull PostViewHolder holder, int position, @NonNull final Profile profile) {
 
             String[] genresArray = getResources().getStringArray(R.array.genres_array);
+            String[] eneatypeArray = getResources().getStringArray(R.array.eneatype_array);
+            String[] subtypeArray = getResources().getStringArray(R.array.subtype_array);
             if(profile.photoUrl.get(0) != null)
                 Glide.with(getContext()).load(profile.photoUrl.get(0))/*.circleCrop()*/.into(holder.authorPhotoImageView);
             holder.nickTextView.setText(profile.nick);
             holder.ageTextView.setText(genresArray[profile.gender] +", "+profile.age+" años");
+            holder.eneatypeTextView.setText(eneatypeArray[profile.eneatype] + " " + subtypeArray[profile.subtype]);
 
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -109,7 +126,7 @@ public class searchFragment extends Fragment {
 
         class PostViewHolder extends RecyclerView.ViewHolder {
             ImageView authorPhotoImageView;
-            TextView nickTextView, ageTextView;
+            TextView eneatypeTextView, nickTextView, ageTextView;
 
             PostViewHolder(@NonNull View itemView) {
                 super(itemView);
@@ -117,6 +134,7 @@ public class searchFragment extends Fragment {
                 authorPhotoImageView = itemView.findViewById(R.id.photoImageView);
                 nickTextView = itemView.findViewById(R.id.nickTextView);
                 ageTextView = itemView.findViewById(R.id.ageTextView);
+                eneatypeTextView = itemView.findViewById(R.id.eneatypeTextView);
             }
         }
     }
